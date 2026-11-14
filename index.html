@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d1224">
+<meta name="description" content="A celebration of love. Join us for our wedding.">
+<meta name="robots" content="index, follow">
+<title>Together Forever | Wedding Invitation</title>
+
+<script>
+if (location.hash.startsWith("#/admin")) {
+  document.querySelector('meta[name="robots"]')?.setAttribute("content","noindex,nofollow");
+}
+</script>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/react-router-dom@5.3.4/umd/react-router-dom.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy:#0d1224;
+  --burgundy:#5a1a2b;
+  --gold:#d4a24c;
+  --glow:#f3d58a;
+  --ivory:#f6ead3;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  background:var(--navy);
+  color:var(--ivory);
+  font-family:'Cormorant Garamond',serif;
+  overflow-x:hidden;
+}
+
+button,input,textarea,select {
+  font-family:inherit;
+}
+
+.script {
+  font-family:'Great Vibes',cursive;
+}
+
+.serif {
+  font-family:'Cormorant Garamond',serif;
+}
+
+.cinzel {
+  font-family:'Cinzel',serif;
+}
+
+.gold {
+  color:var(--glow);
+}
+
+.gold-text {
+  background:linear-gradient(120deg,#fff3c5,#d4a24c,#fff1bd,#b78032);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.page {
+  min-height:100vh;
+  position:relative;
+  isolation:isolate;
+}
+
+.background {
+  position:fixed;
+  inset:0;
+  z-index:-3;
+  overflow:hidden;
+  background:#0d1224;
+}
+
+.background svg {
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.background:after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(5,8,19,.48),transparent 45%,rgba(5,8,19,.48)),
+    linear-gradient(0deg,rgba(5,8,19,.85),rgba(5,8,19,.12) 60%,rgba(5,8,19,.45));
+  pointer-events:none;
+}
+
+#particles {
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+  pointer-events:none;
+}
+
+.glass {
+  background:linear-gradient(135deg,rgba(255,248,230,.13),rgba(255,248,230,.045));
+  border:1px solid rgba(243,213,138,.38);
+  box-shadow:0 20px 65px rgba(0,0,0,.35),inset 0 0 25px rgba(255,255,255,.04);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+
+.gold-button {
+  border:1px solid #f3d58a;
+  background:linear-gradient(135deg,#f4d995,#bd8534,#e9c477);
+  color:#251a17;
+  padding:13px 30px;
+  border-radius:3px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  cursor:pointer;
+  transition:.35s;
+  box-shadow:0 0 22px rgba(212,162,76,.25);
+}
+
+.gold-button:hover {
+  transform:translateY(-3px);
+  box-shadow:0 0 32px rgba(243,213,138,.55);
+}
+
+.outline-button {
+  background:rgba(13,18,36,.35);
+  border:1px solid var(--gold);
+  color:var(--glow);
+  padding:11px 23px;
+  font-family:'Cinzel',serif;
+  font-size:10px;
+  letter-spacing:1.5px;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.outline-button:hover {
+  background:rgba(212,162,76,.18);
+}
+
+.ornament {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:15px;
+  color:var(--glow);
+  margin:22px auto;
+}
+
+.ornament:before,.ornament:after {
+  content:"";
+  height:1px;
+  width:65px;
+  background:linear-gradient(90deg,transparent,var(--gold));
+}
+
+.ornament:after {
+  transform:rotate(180deg);
+}
+
+.hero-title {
+  font-size:clamp(55px,12vw,115px);
+  line-height:1;
+  text-shadow:0 0 35px rgba(243,213,138,.25);
+}
+
+.section-title {
+  font-size:clamp(44px,9vw,76px);
+  line-height:1.1;
+}
+
+.info-card {
+  background:rgba(246,234,211,.09);
+  border:1px solid rgba(212,162,76,.45);
+  padding:23px 12px;
+  text-align:center;
+  min-width:0;
+}
+
+.info-card h3 {
+  font-family:'Cinzel',serif;
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--glow);
+}
+
+.info-card p {
+  font-size:20px;
+  margin-top:12px;
+  overflow-wrap:anywhere;
+}
+
+.polaroid {
+  background:#f7f0e4;
+  padding:12px 12px 48px;
+  transform:rotate(-3deg);
+  box-shadow:0 18px 55px rgba(0,0,0,.45);
+  max-width:290px;
+  margin:auto;
+}
+
+.polaroid img {
+  width:100%;
+  height:320px;
+  object-fit:cover;
+  background:#ddd1bd;
+}
+
+.input {
+  width:100%;
+  background:rgba(0,0,0,.28);
+  border:1px solid rgba(212,162,76,.45);
+  padding:12px;
+  color:#fff5dc;
+  outline:none;
+  margin-top:6px;
+  border-radius:2px;
+}
+
+.input:focus {
+  border-color:var(--glow);
+  box-shadow:0 0 10px rgba(212,162,76,.18);
+}
+
+.input::placeholder {
+  color:rgba(255,255,255,.45);
+}
+
+label {
+  display:block;
+  color:var(--glow);
+  font-family:'Cinzel',serif;
+  font-size:10px;
+  letter-spacing:1px;
+  margin-top:15px;
+}
+
+.admin-bar {
+  position:fixed;
+  top:12px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:30;
+  background:rgba(13,18,36,.9);
+  border:1px solid var(--gold);
+  padding:9px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  border-radius:4px;
+  backdrop-filter:blur(15px);
+  width:max-content;
+  max-width:96vw;
+}
+
+.admin-bar button {
+  color:var(--glow);
+  font-size:10px;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.admin-bar button:hover {
+  color:white;
+}
+
+.toast {
+  position:fixed;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#e6c77e;
+  color:#251a17;
+  padding:13px 25px;
+  z-index:100;
+  box-shadow:0 5px 25px #0008;
+}
+
+.modal-bg {
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.78);
+  z-index:50;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:15px;
+  overflow-y:auto;
+}
+
+.modal {
+  width:min(550px,100%);
+  max-height:88vh;
+  overflow-y:auto;
+  padding:30px;
+  background:linear-gradient(145deg,#222039,#111525);
+  border:1px solid var(--gold);
+  box-shadow:0 0 55px #000;
+}
+
+.petal {
+  animation:fall 8s linear infinite;
+}
+
+@keyframes fall {
+  0% { transform:translateY(-20px) rotate(0deg);opacity:0; }
+  15% { opacity:.8; }
+  100% { transform:translateY(180px) rotate(280deg);opacity:0; }
+}
+
+@keyframes glow {
+  0%,100% { opacity:.7; }
+  50% { opacity:1; }
+}
+
+@keyframes rise {
+  from { transform:translateY(15px);opacity:0; }
+  to { transform:translateY(0);opacity:1; }
+}
+
+.fade-in {
+  animation:rise 1.1s ease both;
+}
+
+.candle-flame {
+  animation:glow 1.5s infinite alternate;
+  transform-origin:center bottom;
+}
+
+.rose {
+  filter:drop-shadow(0 4px 5px #0008);
+}
+
+@media(max-width:600px) {
+  .glass { backdrop-filter:blur(9px); }
+  .admin-bar { gap:8px;padding:8px; }
+  .admin-bar button { font-size:9px; }
+  .modal { padding:22px; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *,*:before,*:after {
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
+}
+</style>
+</head>
+
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const {
+  HashRouter,Switch,Route,Redirect,Link,useHistory,useLocation
+}=ReactRouterDOM;
+
+const {useState,useEffect,useRef}=React;
+
+/* ======================================
+   SUPABASE CONFIGURATION
+====================================== */
+
+const SUPABASE_URL="YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY="YOUR_SUPABASE_ANON_KEY";
+
+const supabaseReady =
+  SUPABASE_URL.startsWith("https://") &&
+  SUPABASE_ANON_KEY !== "YOUR_SUPABASE_ANON_KEY";
+
+const supabase = supabaseReady
+  ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY)
+  : null;
+
+const DEFAULT_DATA = {
+  id:1,
+  bride_name:"Riya",
+  groom_name:"Arjun",
+  wedding_date:"December 20, 2026",
+  invitation_line:"Two hearts, one beautiful journey, and a lifetime of love.",
+  page2_title:"Our Wedding Celebration",
+  invitation_message:"With joyful hearts and immense gratitude, we invite you to celebrate the beginning of our forever. Your presence will make our special day even more beautiful.",
+  sign_off:"With love",
+  closing_line:"Let's celebrate love together!",
+  photo_url:"",
+  wedding_event_date:"December 20, 2026",
+  wedding_time:"6:00 PM",
+  wedding_venue:"Grand Palace",
+  wedding_address:"Bangalore, Karnataka, India",
+  wedding_map:"",
+  wedding_schedule:[
+    {time:"5:30 PM",activity:"Guest Arrival"},
+    {time:"6:00 PM",activity:"Wedding Ceremony"},
+    {time:"7:30 PM",activity:"Celebration & Dinner"}
+  ],
+  roce_date:"December 19, 2026",
+  roce_time:"6:00 PM",
+  roce_venue:"Grand Palace",
+  roce_address:"Bangalore, Karnataka, India",
+  roce_schedule:[
+    {time:"5:30 PM",activity:"Guest Arrival"},
+    {time:"6:00 PM",activity:"Roce Ceremony"},
+    {time:"7:30 PM",activity:"Dinner & Celebration"}
+  ],
+  card_date:"December 20, 2026",
+  card_time:"6:00 PM",
+  card_venue:"Grand Palace"
+};
+
+/* ======================================
+   CHURCH BACKGROUND
+   Entire scenery is SVG/CSS generated.
+====================================== */
+
+function ChurchBackground(){
+  const canvasRef=useRef(null);
+
+  useEffect(()=>{
+    const canvas=canvasRef.current;
+    if(!canvas)return;
+
+    const ctx=canvas.getContext("2d");
+    let width,height,particles=[],raf;
+    const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function resize(){
+      width=canvas.width=window.innerWidth*devicePixelRatio;
+      height=canvas.height=window.innerHeight*devicePixelRatio;
+      canvas.style.width=window.innerWidth+"px";
+      canvas.style.height=window.innerHeight+"px";
+    }
+
+    resize();
+    window.addEventListener("resize",resize);
+
+    for(let i=0;i<55;i++){
+      particles.push({
+        x:Math.random()*2-1,
+        y:Math.random()*2-1,
+        r:Math.random()*2.1+.4,
+        speed:Math.random()*.00035+.00012,
+        alpha:Math.random()*.65+.15,
+        phase:Math.random()*6
+      });
+    }
+
+    let tick=0;
+
+    function draw(){
+      if(document.hidden){raf=requestAnimationFrame(draw);return;}
+
+      ctx.clearRect(0,0,width,height);
+      tick++;
+
+      particles.forEach(p=>{
+        if(!reduced)p.y-=p.speed;
+        if(p.y<-.1)p.y=1.1;
+
+        const x=(p.x+1)*width/2;
+        const y=(p.y+1)*height/2;
+        const a=p.alpha*(.6+.4*Math.sin(tick*.018+p.phase));
+
+        ctx.beginPath();
+        ctx.arc(x,y,p.r*devicePixelRatio,0,Math.PI*2);
+        ctx.fillStyle=`rgba(243,213,138,${a})`;
+        ctx.shadowColor="#f3d58a";
+        ctx.shadowBlur=9*devicePixelRatio;
+        ctx.fill();
+      });
+
+      ctx.shadowBlur=0;
+      if(!reduced)raf=requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    const visibility=()=>{if(!document.hidden&&!reduced)draw();};
+    document.addEventListener("visibilitychange",visibility);
+
+    return ()=>{
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize",resize);
+      document.removeEventListener("visibilitychange",visibility);
+    };
+  },[]);
+
+  return <>
+    <div className="background">
+      <svg viewBox="0 0 1200 850" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="wall" x2="1">
+            <stop stopColor="#332b30"/>
+            <stop offset=".5" stopColor="#d4c1a0"/>
+            <stop offset="1" stopColor="#302731"/>
+          </linearGradient>
+
+          <linearGradient id="marble" x2="0" y2="1">
+            <stop stopColor="#f6e8ce"/>
+            <stop offset=".5" stopColor="#b4a38f"/>
+            <stop offset="1" stopColor="#292a38"/>
+          </linearGradient>
+
+          <linearGradient id="floor" x2="0" y2="1">
+            <stop stopColor="#d3b88c"/>
+            <stop offset=".25" stopColor="#8d796d"/>
+            <stop offset="1" stopColor="#171a2a"/>
+          </linearGradient>
+
+          <linearGradient id="goldlight" x2="0" y2="1">
+            <stop stopColor="#fff6c8"/>
+            <stop offset="1" stopColor="#a96d27"/>
+          </linearGradient>
+
+          <radialGradient id="altarGlow">
+            <stop stopColor="#fff4c1" stopOpacity=".95"/>
+            <stop offset=".4" stopColor="#d4a24c" stopOpacity=".35"/>
+            <stop offset="1" stopColor="#d4a24c" stopOpacity="0"/>
+          </radialGradient>
+
+          <linearGradient id="glassLight" x2="0" y2="1">
+            <stop stopColor="#f4d58b"/>
+            <stop offset="1" stopColor="#5b173e"/>
+          </linearGradient>
+
+          <filter id="blur">
+            <feGaussianBlur stdDeviation="13"/>
+          </filter>
+
+          <filter id="soft">
+            <feGaussianBlur stdDeviation="3"/>
+          </filter>
+        </defs>
+
+        <rect width="1200" height="850" fill="#111729"/>
+        <path d="M0 0H1200V850H0Z" fill="url(#wall)" opacity=".45"/>
+
+        <!-- Architectural ceiling -->
+        <path d="M0 0H1200L740 350H460Z" fill="#242536"/>
+        <path d="M0 0L600 390L1200 0" fill="none" stroke="#d6b783" strokeWidth="9" opacity=".4"/>
+
+        <!-- Coloured light beams -->
+        <g opacity=".13" filter="url(#blur)">
+          <path d="M520 150L250 750H500Z" fill="#4589df"/>
+          <path d="M650 150L950 750H700Z" fill="#d34d68"/>
+          <path d="M570 150L400 750H610Z" fill="#e6b34f"/>
+          <path d="M620 150L800 750H610Z" fill="#4bba91"/>
+        </g>
+
+        <!-- Side arches -->
+        <g fill="none" stroke="#d9c9aa" strokeWidth="22" opacity=".78">
+          <path d="M-100 760V250Q90 -20 280 250V760"/>
+          <path d="M920 760V250Q1110 -20 1300 250V760"/>
+        </g>
+
+        <g fill="none" stroke="#6f5d53" strokeWidth="7" opacity=".5">
+          <path d="M-70 760V260Q90 20 250 260V760"/>
+          <path d="M950 760V260Q1110 20 1270 260V760"/>
+        </g>
+
+        <!-- Receding columns -->
+        <g fill="url(#marble)" stroke="#ad997a" strokeWidth="3">
+          <rect x="65" y="260" width="68" height="450" rx="12"/>
+          <rect x="190" y="320" width="45" height="390" rx="9"/>
+          <rect x="1045" y="260" width="68" height="450" rx="12"/>
+          <rect x="965" y="320" width="45" height="390" rx="9"/>
+        </g>
+
+        <g fill="#e9d5b1">
+          <rect x="52" y="250" width="94" height="20" rx="5"/>
+          <rect x="180" y="312" width="65" height="14" rx="5"/>
+          <rect x="1034" y="250" width="94" height="20" rx="5"/>
+          <rect x="955" y="312" width="65" height="14" rx="5"/>
+        </g>
+
+        <!-- Stained glass -->
+        <g transform="translate(510 45)">
+          <path d="M0 150V55Q90 -50 180 55V150Z" fill="#17243d" stroke="#d5aa5d" strokeWidth="7"/>
+          <path d="M12 145V60Q90 -28 168 60V145Z" fill="#264f86" stroke="#e5bd74" strokeWidth="3"/>
+          <path d="M90 30V145M15 95H165" stroke="#e7c37c" strokeWidth="5"/>
+          <path d="M15 65L90 95L165 65L90 35Z" fill="#8e2843" opacity=".85"/>
+          <path d="M15 100L90 95L90 145H15Z" fill="#1c765e" opacity=".9"/>
+          <path d="M90 95H165V145H90Z" fill="#b36d22" opacity=".9"/>
+          <circle cx="90" cy="75" r="22" fill="#f5d78a" opacity=".6"/>
+        </g>
+
+        <!-- Altar glow -->
+        <ellipse cx="600" cy="340" rx="250" ry="210" fill="url(#altarGlow)"/>
+
+        <!-- Altar -->
+        <g>
+          <path d="M465 420H735L755 475H445Z" fill="#d2b47e" stroke="#f7df9e" strokeWidth="3"/>
+          <path d="M490 475H710V555H490Z" fill="#796048"/>
+          <path d="M455 555H745V575H455Z" fill="#c69a50"/>
+          <path d="M600 260V415M570 300H630" stroke="#e8cf91" strokeWidth="9" strokeLinecap="round"/>
+          <path d="M600 260V415M570 300H630" stroke="#6d4828" strokeWidth="2" opacity=".7"/>
+        </g>
+
+        <!-- Candelabras -->
+        <g stroke="#d9b56b" strokeWidth="5" fill="none">
+          <path d="M420 450V365M390 365H450M400 390L420 365L440 390"/>
+          <path d="M780 450V365M750 365H810M760 390L780 365L800 390"/>
+        </g>
+
+        <g className="candle-flame" fill="#ffe8a2">
+          <path d="M410 360Q400 340 420 328Q430 347 410 360Z"/>
+          <path d="M590 240Q580 220 600 208Q610 230 590 240Z"/>
+          <path d="M790 360Q780 340 800 328Q810 347 790 360Z"/>
+        </g>
+
+        <!-- Hanging chandeliers -->
+        <g stroke="#d4a24c" fill="#f3d58a">
+          <path d="M260 0V95M940 0V95" strokeWidth="3"/>
+          <circle cx="260" cy="105" r="25" fill="none" strokeWidth="4"/>
+          <circle cx="940" cy="105" r="25" fill="none" strokeWidth="4"/>
+          <circle cx="260" cy="105" r="7"/>
+          <circle cx="940" cy="105" r="7"/>
+          <path d="M245 110L230 140M275 110L290 140M925 110L910 140M955 110L970 140" strokeWidth="3"/>
+        </g>
+
+        <!-- Floor perspective -->
+        <path d="M0 520L450 390H750L1200 520V850H0Z" fill="url(#floor)"/>
+        <path d="M450 390L250 850M750 390L950 850" stroke="#f1d6a4" strokeWidth="3" opacity=".28"/>
+        <path d="M0 650H1200M0 760H1200" stroke="#e4c89d" strokeWidth="2" opacity=".18"/>
+
+        <!-- Floor reflection -->
+        <g opacity=".15" filter="url(#soft)">
+          <path d="M455 570H745L790 850H410Z" fill="#f5d99a"/>
+          <path d="M550 570H650L680 850H520Z" fill="#fff2d2"/>
+        </g>
+
+        <!-- Pew silhouettes -->
+        <g fill="#3d202a" stroke="#b78b4c" strokeWidth="3">
+          <path d="M0 500L330 475V500L0 550Z"/>
+          <path d="M1200 500L870 475V500L1200 550Z"/>
+          <path d="M0 620L350 560V590L0 680Z"/>
+          <path d="M1200 620L850 560V590L1200 680Z"/>
+        </g>
+
+        <!-- Candle rows -->
+        <g fill="#e8d4aa">
+          {Array.from({length:9},(_,i)=><rect key={i} x={35+i*30} y={470+i*3} width="4" height="24" rx="2"/>)}
+          {Array.from({length:9},(_,i)=><rect key={i} x={900+i*30} y={470+i*3} width="4" height="24" rx="2"/>)}
+        </g>
+
+        <g fill="#ffe7a0" className="candle-flame">
+          {Array.from({length:18},(_,i)=><circle key={i} cx={37+i*30} cy={467+(i%9)*3} r="3"/>)}
+        </g>
+
+        <!-- Rose arrangements -->
+        <g className="rose">
+          {[45,130,1000,1090].map((x,i)=>
+            <g key={i} transform={`translate(${x} ${i%2?620:565})`}>
+              <path d="M0 0Q-15 -60 0 -85Q15 -60 0 0" fill="#425b42"/>
+              <circle cx="0" cy="-25" r="17" fill="#eee1d0"/>
+              <circle cx="-10" cy="-35" r="11" fill="#fff8eb"/>
+              <circle cx="10" cy="-35" r="11" fill="#e9d5c6"/>
+              <circle cx="0" cy="-44" r="9" fill="#fff"/>
+              <circle cx="0" cy="-34" r="5" fill="#d8a5a0"/>
+            </g>
+          )}
+        </g>
+
+        <rect width="1200" height="850" fill="none" stroke="#080b15" strokeWidth="55" opacity=".4"/>
+      </svg>
+    </div>
+    <canvas id="particles" ref={canvasRef}/>
+  </>;
+}
+
+/* ======================================
+   ROSE PETALS
+====================================== */
+
+function FallingPetals(){
+  return <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    {Array.from({length:12},(_,i)=>
+      <div key={i} className="petal absolute"
+        style={{
+          left:(i*9)%100+"%",
+          top:(i*13)%60+"%",
+          animationDelay:(i*.7)+"s",
+          animationDuration:(7+i%4)+"s",
+          color:"#e9b7b8",
+          fontSize:14+i%12
+        }}>❀</div>
+    )}
+  </div>;
+}
+
+/* ======================================
+   CODE-DRAWN ALTAR COUPLE
+====================================== */
+
+function AltarCoupleScene(){
+  return <div className="w-full relative overflow-hidden glass mt-16">
+    <div className="absolute inset-0 bg-gradient-to-t from-[#0d1224] via-transparent to-[#d4a24c]/10"/>
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="w-72 h-72 rounded-full bg-amber-300/20 blur-3xl"/>
+    </div>
+
+    <FallingPetals/>
+
+    <svg viewBox="0 0 900 560" className="w-full relative" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <radialGradient id="coupleGlow">
+          <stop stopColor="#fff0c1" stopOpacity=".85"/>
+          <stop offset="1" stopColor="#d4a24c" stopOpacity="0"/>
+        </radialGradient>
+        <linearGradient id="gown" x2="1">
+          <stop stopColor="#bcb8b1"/>
+          <stop offset=".4" stopColor="#fffaf0"/>
+          <stop offset="1" stopColor="#d6cdbf"/>
+        </linearGradient>
+        <linearGradient id="suit" x2="1">
+          <stop stopColor="#111626"/>
+          <stop offset=".5" stopColor="#303447"/>
+          <stop offset="1" stopColor="#101421"/>
+        </linearGradient>
+      </defs>
+
+      <ellipse cx="450" cy="280" rx="270" ry="230" fill="url(#coupleGlow)"/>
+
+      <!-- Distant altar -->
+      <path d="M350 70H550V230H350Z" fill="#d4a24c" opacity=".15"/>
+      <path d="M450 75V160M430 105H470" stroke="#f3d58a" strokeWidth="6"/>
+      <path d="M300 250H600L580 280H320Z" fill="#d4a24c" opacity=".25"/>
+
+      <!-- Floor -->
+      <path d="M0 400L450 330L900 400V560H0Z" fill="#bda17c" opacity=".13"/>
+      <path d="M450 330L300 560M450 330L600 560" stroke="#e8c990" opacity=".35"/>
+
+      <!-- Bride veil -->
+      <path d="M365 130Q310 210 340 360Q380 430 455 365Q490 220 430 130Z"
+        fill="#f5efe6" opacity=".48" stroke="#fff3df" strokeWidth="2"/>
+
+      <!-- Bride hair -->
+      <ellipse cx="390" cy="150" rx="34" ry="43" fill="#38251f"/>
+      <path d="M365 125Q390 90 420 130L430 175Q410 190 395 170Z" fill="#4b2d24"/>
+
+      <!-- Bride dress -->
+      <path d="M380 185Q350 205 340 275L275 475Q390 505 500 475L435 275Q425 205 400 185Z"
+        fill="url(#gown)" stroke="#fff6e9" strokeWidth="3"/>
+
+      <path d="M370 230Q395 280 430 420M410 225Q430 300 470 460M355 300Q375 390 340 465"
+        fill="none" stroke="#d2c3ae" strokeWidth="3" opacity=".65"/>
+
+      <!-- Bride arm -->
+      <path d="M370 210Q330 250 365 300L430 320" fill="none" stroke="#e7c6a9" strokeWidth="17" strokeLinecap="round"/>
+
+      <!-- Groom body -->
+      <path d="M475 190L520 190L550 445L445 445Z" fill="url(#suit)" stroke="#6c6370" strokeWidth="2"/>
+      <path d="M480 190L500 255L520 190L505 310Z" fill="#e7e0d6"/>
+      <path d="M475 190L495 250L500 190Z" fill="#b8a5a0"/>
+      <path d="M520 190L510 250L505 190Z" fill="#292d3d"/>
+
+      <!-- Groom head -->
+      <ellipse cx="500" cy="145" rx="32" ry="40" fill="#b98567"/>
+      <path d="M469 140Q470 100 505 105Q535 110 532 140Q505 125 469 140Z" fill="#29211e"/>
+
+      <!-- Groom trousers -->
+      <path d="M455 430L505 430L505 530H460Z" fill="#111827"/>
+      <path d="M510 430L540 430L550 530H510Z" fill="#111827"/>
+
+      <!-- Hands -->
+      <path d="M430 310Q465 325 485 305" fill="none" stroke="#d8b394" strokeWidth="15" strokeLinecap="round"/>
+
+      <!-- Bouquet -->
+      <path d="M350 310L370 355" stroke="#58724c" strokeWidth="5"/>
+      <g fill="#fff0e5">
+        <circle cx="340" cy="300" r="13"/>
+        <circle cx="355" cy="295" r="12"/>
+        <circle cx="350" cy="315" r="12"/>
+        <circle cx="365" cy="310" r="11"/>
+        <circle cx="333" cy="315" r="9"/>
+      </g>
+      <g fill="#d8a24c">
+        <circle cx="350" cy="304" r="4"/>
+      </g>
+
+      <!-- Reflections -->
+      <g opacity=".15" filter="blur(5px)">
+        <path d="M275 475Q390 505 500 475L480 555H300Z" fill="#fff3dc"/>
+      </g>
+    </svg>
+
+    <div className="relative text-center pb-8 px-5">
+      <p className="script text-5xl gold-text">A lifetime of love</p>
+      <p className="cinzel text-xs tracking-[4px] mt-3 text-[#e6c98d]">THE BEGINNING OF FOREVER</p>
+    </div>
+  </div>;
+}
+
+/* ======================================
+   SHARED UTILITIES
+====================================== */
+
+function Ornament(){
+  return <div className="ornament"><span>✦ ♡ ✦</span></div>;
+}
+
+function AdminBar({user,onLogout}){
+  const history=useHistory();
+
+  if(!user)return null;
+
+  return <div className="admin-bar">
+    <button onClick={()=>history.push("/")}>Page 1</button>
+    <button onClick={()=>history.push("/invitation")}>Page 2</button>
+    <button onClick={()=>history.push("/admin")}>Dashboard</button>
+    <button onClick={onLogout}>Sign out</button>
+  </div>;
+}
+
+function Toast({message}){
+  if(!message)return null;
+  return <div className="toast">{message}</div>;
+}
+
+function DetailsModal({type,data,onClose}){
+  const isWedding=type==="wedding";
+  const prefix=isWedding?"wedding":"roce";
+
+  const schedule=data[prefix+"_schedule"]||[];
+
+  return <div className="modal-bg" onClick={onClose}>
+    <div className="modal" onClick={e=>e.stopPropagation()}>
+      <div className="text-right">
+        <button onClick={onClose} className="gold text-xl">✕</button>
+      </div>
+
+      <h2 className="script text-6xl text-center gold-text">
+        {isWedding?"Wedding Details":"Roce Details"}
+      </h2>
+
+      <Ornament/>
+
+      <div className="space-y-5 text-center">
+        <div>
+          <p className="cinzel text-xs gold">DATE</p>
+          <p className="text-2xl">{data[prefix+"_date"]}</p>
+        </div>
+        <div>
+          <p className="cinzel text-xs gold">TIME</p>
+          <p className="text-2xl">{data[prefix+"_time"]}</p>
+        </div>
+        <div>
+          <p className="cinzel text-xs gold">VENUE</p>
+          <p className="text-2xl">{data[prefix+"_venue"]}</p>
+          <p className="text-base opacity-80">{data[prefix+"_address"]}</p>
+        </div>
+      </div>
+
+      <Ornament/>
+
+      <h3 className="cinzel text-center gold text-sm mb-5">SCHEDULE</h3>
+
+      {schedule.map((s,i)=>
+        <div key={i} className="flex justify-between border-b border-[#d4a24c]/25 py-3 gap-4">
+          <span className="gold">{s.time}</span>
+          <span>{s.activity}</span>
+        </div>
+      )}
+
+      {isWedding&&data.wedding_map&&
+        <a href={data.wedding_map} target="_blank" rel="noreferrer"
+          className="gold-button block text-center mt-7">
+          GET DIRECTIONS ↗
+        </a>
+      }
+
+      <button className="outline-button w-full mt-6" onClick={onClose}>CLOSE</button>
+    </div>
+  </div>;
+}
+
+/* ======================================
+   MAIN APPLICATION
+====================================== */
+
+function App(){
+  const history=useHistory();
+  const location=useLocation();
+
+  const [data,setData]=useState(DEFAULT_DATA);
+  const [user,setUser]=useState(null);
+  const [loading,setLoading]=useState(true);
+  const [modal,setModal]=useState(null);
+  const [toast,setToast]=useState("");
+  const [authError,setAuthError]=useState("");
+
+  useEffect(()=>{
+    loadData();
+
+    if(!supabase){
+      setLoading(false);
+      return;
+    }
+
+    supabase.auth.getSession().then(({data:{session}})=>{
+      setUser(session?.user||null);
+    });
+
+    const {data:listener}=supabase.auth.onAuthStateChange((_event,session)=>{
+      setUser(session?.user||null);
+    });
+
+    return ()=>listener.subscription.unsubscribe();
+  },[]);
+
+  async function loadData(){
+    if(!supabase){
+      setLoading(false);
+      return;
+    }
+
+    try{
+      const {data:rows,error}=await supabase
+        .from("wedding_details")
+        .select("*")
+        .eq("id",1)
+        .maybeSingle();
+
+      if(error)throw error;
+
+      if(rows){
+        const merged={...DEFAULT_DATA,...rows};
+
+        const {data:schedules}=await supabase
+          .from("schedule_items")
+          .select("*")
+          .order("position");
+
+        if(schedules){
+          merged.wedding_schedule=schedules
+            .filter(x=>x.event_type==="wedding")
+            .map(x=>({time:x.time,activity:x.activity}));
+
+          merged.roce_schedule=schedules
+            .filter(x=>x.event_type==="roce")
+            .map(x=>({time:x.time,activity:x.activity}));
+        }
+
+        setData(merged);
+      }
+    }catch(error){
+      console.error("Loading wedding data:",error);
+    }
+
+    setLoading(false);
+  }
+
+  function notify(message){
+    setToast(message);
+    setTimeout(()=>setToast(""),3000);
+  }
+
+  async function logout(){
+    if(supabase)await supabase.auth.signOut();
+    setUser(null);
+    history.push("/");
+    notify("Signed out successfully");
+  }
+
+  const isAdmin=location.pathname==="/admin"||
+                location.pathname==="/admin-login";
+
+  return <>
+    <ChurchBackground/>
+
+    {user&&<AdminBar user={user} onLogout={logout}/>}
+
+    <Switch>
+
+      <Route exact path="/">
+        <WelcomePage data={data} onOpen={()=>history.push("/invitation")}/>
+      </Route>
+
+      <Route path="/invitation">
+        <InvitationPage data={data} onBack={()=>history.push("/")} onDetails={setModal}/>
+      </Route>
+
+      <Route path="/admin-login">
+        {user?<Redirect to="/admin"/>:
+          <AdminLogin
+            onLogin={async(email,password)=>{
+              setAuthError("");
+
+              if(!supabase){
+                setAuthError("Supabase is not configured. Add your project URL and anon key.");
+                return;
+              }
+
+              try{
+                const {data:result,error}=await supabase.auth.signInWithPassword({email,password});
+                if(error)throw error;
+
+                const {data:allowed,error:allowError}=await supabase
+                  .from("admins")
+                  .select("email")
+                  .eq("email",result.user.email)
+                  .maybeSingle();
+
+                if(allowError||!allowed){
+                  await supabase.auth.signOut();
+                  throw new Error("This email is not authorised to access the dashboard.");
+                }
+
+                setUser(result.user);
+                history.push("/admin");
+              }catch(error){
+                setAuthError(error.message);
+              }
+            }}
+            error={authError}
+          />
+        }
+      </Route>
+
+      <Route path="/admin">
+        {!user?<Redirect to="/admin-login"/>:
+          <AdminDashboard
+            data={data}
+            setData={setData}
+            onSave={async()=>{
+              if(!supabase){
+                notify("Connect Supabase before publishing.");
+                return;
+              }
+
+              try{
+                const {data:allowed,error:allowError}=await supabase
+                  .from("admins")
+                  .select("email")
+                  .eq("email",user.email)
+                  .maybeSingle();
+
+                if(allowError||!allowed)throw new Error("Not authorised.");
+
+                const fields={...data};
+                delete fields.wedding_schedule;
+                delete fields.roce_schedule;
+
+                const {error}=await supabase
+                  .from("wedding_details")
+                  .upsert(fields,{onConflict:"id"});
+
+                if(error)throw error;
+
+                await supabase.from("schedule_items")
+                  .delete().eq("event_type","wedding");
+
+                await supabase.from("schedule_items")
+                  .delete().eq("event_type","roce");
+
+                const schedules=[
+                  ...(data.wedding_schedule||[]).map((s,i)=>({
+                    event_type:"wedding",
+                    time:s.time,
+                    activity:s.activity,
+                    position:i
+                  })),
+                  ...(data.roce_schedule||[]).map((s,i)=>({
+                    event_type:"roce",
+                    time:s.time,
+                    activity:s.activity,
+                    position:i
+                  }))
+                ];
+
+                if(schedules.length){
+                  const {error:scheduleError}=await supabase
+                    .from("schedule_items").insert(schedules);
+
+                  if(scheduleError)throw scheduleError;
+                }
+
+                await loadData();
+                notify("Published successfully! ✨");
+
+              }catch(error){
+                console.error(error);
+                notify("Save failed: "+error.message);
+              }
+            }}
+            onUpload={async(file)=>{
+              if(!supabase)throw new Error("Connect Supabase first.");
+
+              if(!file.type.startsWith("image/"))throw new Error("Please select an image.");
+              if(file.size>5*1024*1024)throw new Error("Image must be under 5 MB.");
+
+              const ext=file.name.split(".").pop().toLowerCase();
+              const path="couple-"+Date.now()+"."+ext;
+
+              const {error}=await supabase.storage
+                .from("couple-photos")
+                .upload(path,file,{upsert:true,contentType:file.type});
+
+              if(error)throw error;
+
+              const {data:publicData}=supabase.storage
+                .from("couple-photos")
+                .getPublicUrl(path);
+
+              setData(d=>({...d,photo_url:publicData.publicUrl}));
+              notify("Photo uploaded. Save changes to publish.");
+            }}
+          />
+        }
+      </Route>
+
+      <Route>
+        <Redirect to="/"/>
+      </Route>
+
+    </Switch>
+
+    {modal&&<DetailsModal type={modal} data={data} onClose={()=>setModal(null)}/>}
+
+    <Toast message={toast}/>
+  </>;
+}
+
+/* ======================================
+   PAGE 1: WELCOME
+====================================== */
+
+function WelcomePage({data,onOpen}){
+  return <main className="page flex items-center justify-center text-center px-5 py-16">
+    <div className="max-w-3xl w-full fade-in">
+
+      <div className="text-5xl gold-text mb-7">♧ ♡ ♧</div>
+
+      <p className="cinzel tracking-[5px] text-xs gold mb-7">
+        A CELEBRATION OF LOVE
+      </p>
+
+      <h1 className="script hero-title gold-text">Together Forever</h1>
+
+      <Ornament/>
+
+      <p className="cinzel text-xs tracking-[5px] mb-8">
+        JOYFULLY INVITE YOU TO CELEBRATE
+      </p>
+
+      <h2 className="script text-6xl md:text-8xl gold-text leading-tight">
+        {data.bride_name}
+        <span className="text-4xl mx-3 text-[#f6ead3]">&</span>
+        {data.groom_name}
+      </h2>
+
+      <p className="cinzel text-sm tracking-[5px] mt-8">
+        ARE GETTING MARRIED!
+      </p>
+
+      <Ornament/>
+
+      <p className="text-3xl md:text-4xl gold">
+        {data.wedding_date}
+      </p>
+
+      <p className="text-xl md:text-2xl mt-6 max-w-xl mx-auto leading-relaxed opacity-90">
+        {data.invitation_line}
+      </p>
+
+      <div className="mt-12">
+        <button className="gold-button" onClick={onOpen}>
+          Open Invitation &nbsp; ✧
+        </button>
+      </div>
+
+      <p className="cinzel text-[9px] tracking-[4px] opacity-60 mt-16">
+        WITH LOVE, WE INVITE YOU
+      </p>
+    </div>
+  </main>;
+}
+
+/* ======================================
+   PAGE 2: INVITATION
+====================================== */
+
+function InvitationPage({data,onBack,onDetails}){
+  return <main className="page px-5 pt-16 pb-10">
+
+    <div className="max-w-5xl mx-auto text-center fade-in">
+
+      <p className="cinzel text-xs tracking-[5px] gold">
+        YOU ARE CORDIALLY INVITED
+      </p>
+
+      <h1 className="script section-title gold-text mt-5">
+        {data.page2_title}
+      </h1>
+
+      <Ornament/>
+
+      <p className="text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto mt-8">
+        {data.invitation_message}
+      </p>
+
+      <div className="mt-16 mb-12">
+        {data.photo_url?
+          <div className="polaroid">
+            <img src={data.photo_url} alt="The couple"/>
+            <p className="script text-4xl text-[#765337] mt-3">
+              Forever & Always
+            </p>
+          </div>
+          :
+          <div className="polaroid">
+            <div className="h-[320px] bg-gradient-to-br from-[#d9c5aa] via-[#f4ead9] to-[#9e806b] flex flex-col items-center justify-center text-[#72513c]">
+              <span className="text-6xl">♡</span>
+              <p className="script text-4xl mt-5">
+                A beautiful beginning
+              </p>
+            </div>
+            <p className="script text-4xl text-[#765337] mt-3">
+              Forever & Always
+            </p>
+          </div>
+        }
+      </div>
+
+      <p className="script text-5xl gold-text">
+        {data.sign_off},
+      </p>
+
+      <p className="text-3xl mt-2">
+        {data.bride_name} & {data.groom_name}
+      </p>
+
+      <Ornament/>
+
+      <!-- Event detail buttons -->
+      <div className="flex flex-wrap justify-center gap-4 mt-10">
+        <button className="gold-button" onClick={()=>onDetails("wedding")}>
+          Wedding Details
+        </button>
+        <button className="outline-button" onClick={()=>onDetails("roce")}>
+          Roce Details
+        </button>
+      </div>
+
+      <!-- Information cards -->
+      <div className="grid grid-cols-3 gap-3 md:gap-6 mt-14">
+        <div className="info-card">
+          <div className="text-3xl gold">♧</div>
+          <h3 className="mt-3">DATE</h3>
+          <p>{data.card_date}</p>
+        </div>
+
+        <div className="info-card">
+          <div className="text-3xl gold">◷</div>
+          <h3 className="mt-3">TIME</h3>
+          <p>{data.card_time}</p>
+        </div>
+
+        <div className="info-card">
+          <div className="text-3xl gold">⌖</div>
+          <h3 className="mt-3">VENUE</h3>
+          <p>{data.card_venue}</p>
+        </div>
+      </div>
+
+      <!-- Altar scene at the bottom -->
+      <AltarCoupleScene/>
+
+      <p className="script text-5xl md:text-6xl gold-text mt-14">
+        {data.closing_line}
+      </p>
+
+      <Ornament/>
+
+      <button className="outline-button mt-5" onClick={onBack}>
+        ← BACK TO WELCOME
+      </button>
+
+      <p className="cinzel text-[9px] tracking-[4px] opacity-50 mt-12">
+        MADE WITH LOVE
+      </p>
+
+    </div>
+  </main>;
+}
+
+/* ======================================
+   PAGE 3: ADMIN LOGIN
+====================================== */
+
+function AdminLogin({onLogin,error}){
+  const [email,setEmail]=useState("");
+  const [password,setPassword]=useState("");
+  const [busy,setBusy]=useState(false);
+
+  async function submit(e){
+    e.preventDefault();
+    setBusy(true);
+    await onLogin(email.trim(),password);
+    setBusy(false);
+  }
+
+  return <main className="page min-h-screen flex items-center justify-center p-5">
+    <div className="glass max-w-md w-full p-8 md:p-12 text-center fade-in">
+
+      <div className="text-6xl gold-text mb-5">♙</div>
+
+      <h1 className="script text-7xl gold-text">Admin Access</h1>
+
+      <Ornament/>
+
+      <p className="text-xl opacity-80 mb-8">
+        Enter your credentials to continue
+      </p>
+
+      <form onSubmit={submit} className="text-left">
+        <label>EMAIL ADDRESS</label>
+        <input className="input" type="email" required
+          value={email} onChange={e=>setEmail(e.target.value)}
+          placeholder="Enter your email"/>
+
+        <label>PASSWORD</label>
+        <input className="input" type="password" required
+          value={password} onChange={e=>setPassword(e.target.value)}
+          placeholder="Enter your password"/>
+
+        {error&&<p className="text-red-300 text-sm mt-4">{error}</p>}
+
+        <button className="gold-button w-full mt-8" disabled={busy}>
+          {busy?"PLEASE WAIT...":"LOGIN"}
+        </button>
+      </form>
+
+      <p className="text-xs tracking-wider opacity-60 mt-8">
+        UNAUTHORIZED ACCESS IS PROHIBITED.
+      </p>
+
+      <Link to="/" className="block gold text-sm mt-8">Return to website</Link>
+    </div>
+  </main>;
+}
+
+/* ======================================
+   ADMIN DASHBOARD
+====================================== */
+
+function AdminDashboard({data,setData,onSave,onUpload}){
+  const [uploading,setUploading]=useState(false);
+  const [saving,setSaving]=useState(false);
+  const [error,setError]=useState("");
+
+  function update(key,value){
+    setData(d=>({...d,[key]:value}));
+  }
+
+  function addSchedule(type){
+    const key=type+"_schedule";
+    update(key,[...(data[key]||[]),{time:"",activity:""}]);
+  }
+
+  function updateSchedule(type,index,field,value){
+    const key=type+"_schedule";
+    const items=[...(data[key]||[])];
+    items[index]={...items[index],[field]:value};
+    update(key,items);
+  }
+
+  function removeSchedule(type,index){
+    const key=type+"_schedule";
+    update(key,(data[key]||[]).filter((_,i)=>i!==index));
+  }
+
+  function moveSchedule(type,index,direction){
+    const key=type+"_schedule";
+    const items=[...(data[key]||[])];
+    const next=index+direction;
+
+    if(next<0||next>=items.length)return;
+
+    [items[index],items[next]]=[items[next],items[index]];
+    update(key,items);
+  }
+
+  async function uploadPhoto(e){
+    const file=e.target.files?.[0];
+    if(!file)return;
+
+    setUploading(true);
+    setError("");
+
+    try{
+      await onUpload(file);
+    }catch(err){
+      setError(err.message);
+    }
+
+    setUploading(false);
+    e.target.value="";
+  }
+
+  async function save(){
+    setSaving(true);
+    setError("");
+
+    try{
+      await onSave();
+    }catch(err){
+      setError(err.message);
+    }
+
+    setSaving(false);
+  }
+
+  function field(label,key,type="text"){
+    return <div>
+      <label>{label}</label>
+      <input className="input" type={type}
+        value={data[key]??""}
+        onChange={e=>update(key,e.target.value)}/>
+    </div>;
+  }
+
+  function textarea(label,key){
+    return <div>
+      <label>{label}</label>
+      <textarea className="input" rows="3"
+        value={data[key]??""}
+        onChange={e=>update(key,e.target.value)}/>
+    </div>;
+  }
+
+  function scheduleEditor(type,title){
+    const key=type+"_schedule";
+    const items=data[key]||[];
+
+    return <section className="glass p-5 md:p-7 mt-7">
+      <h3 className="script text-4xl gold-text mb-5">{title}</h3>
+
+      {items.map((item,i)=>
+        <div key={i} className="border border-[#d4a24c]/25 p-3 mb-4">
+          <div className="grid md:grid-cols-2 gap-3">
+            <div>
+              <label>TIME</label>
+              <input className="input" value={item.time}
+                onChange={e=>updateSchedule(type,i,"time",e.target.value)}/>
+            </div>
+            <div>
+              <label>ACTIVITY</label>
+              <input className="input" value={item.activity}
+                onChange={e=>updateSchedule(type,i,"activity",e.target.value)}/>
+            </div>
+          </div>
+
+          <div className="flex gap-3 mt-3">
+            <button className="outline-button" onClick={()=>moveSchedule(type,i,-1)}>↑</button>
+            <button className="outline-button" onClick={()=>moveSchedule(type,i,1)}>↓</button>
+            <button className="outline-button" onClick={()=>removeSchedule(type,i)}>REMOVE</button>
+          </div>
+        </div>
+      )}
+
+      <button className="outline-button" onClick={()=>addSchedule(type)}>
+        + ADD SCHEDULE ROW
+      </button>
+    </section>;
+  }
+
+  return <main className="page px-4 pt-24 pb-16">
+    <div className="max-w-5xl mx-auto">
+
+      <div className="text-center mb-10">
+        <p className="cinzel text-xs gold tracking-[4px]">PRIVATE CONTROL PANEL</p>
+        <h1 className="script text-7xl gold-text mt-4">Wedding Dashboard</h1>
+        <Ornament/>
+        <p className="text-lg opacity-80">Manage your wedding invitation</p>
+      </div>
+
+      <div className="glass p-5 md:p-8">
+
+        <h2 className="script text-4xl gold-text mb-5">Page 1 – Welcome</h2>
+
+        <div className="grid md:grid-cols-2 gap-4">
+          {field("BRIDE NAME","bride_name")}
+          {field("GROOM NAME","groom_name")}
+          {field("WEDDING DATE","wedding_date")}
+          {field("INVITATION LINE","invitation_line")}
+        </div>
+
+        <Ornament/>
+
+        <h2 className="script text-4xl gold-text mb-5">Page 2 – Invitation</h2>
+
+        {field("PAGE 2 TITLE","page2_title")}
+        {textarea("INVITATION MESSAGE","invitation_message")}
+        {field("SIGN-OFF","sign_off")}
+        {field("CLOSING LINE","closing_line")}
+
+        <div className="mt-7">
+          <label>COUPLE PHOTO</label>
+          {data.photo_url&&
+            <img src={data.photo_url} className="w-36 h-36 object-cover mt-4 border border-[#d4a24c]"/>
+          }
+
+          <input type="file" accept="image/*"
+            onChange={uploadPhoto}
+            className="block mt-4 text-sm max-w-full"/>
+
+          <p className="text-xs opacity-60 mt-2">
+            Maximum image size: 5 MB.
+          </p>
+
+          {uploading&&<p className="gold mt-3">Uploading photo...</p>}
+        </div>
+
+        <Ornament/>
+
+        <h2 className="script text-4xl gold-text mb-5">Wedding Details</h2>
+
+        <div className="grid md:grid-cols-2 gap-4">
+          {field("DATE","wedding_event_date")}
+          {field("TIME","wedding_time")}
+          {field("VENUE","wedding_venue")}
+          {field("ADDRESS","wedding_address")}
+          {field("GOOGLE MAPS LINK","wedding_map")}
+        </div>
+
+        {scheduleEditor("wedding","Wedding Schedule")}
+
+        <Ornament/>
+
+        <h2 className="script text-4xl gold-text mb-5">Roce Details</h2>
+
+        <div className="grid md:grid-cols-2 gap-4">
+          {field("DATE","roce_date")}
+          {field("TIME","roce_time")}
+          {field("VENUE","roce_venue")}
+          {field("ADDRESS","roce_address")}
+        </div>
+
+        {scheduleEditor("roce","Roce Schedule")}
+
+        <Ornament/>
+
+        <h2 className="script text-4xl gold-text mb-5">Information Cards</h2>
+
+        <div className="grid md:grid-cols-3 gap-4">
+          {field("CARD DATE","card_date")}
+          {field("CARD TIME","card_time")}
+          {field("CARD VENUE","card_venue")}
+        </div>
+
+        {error&&<p className="text-red-300 mt-5">{error}</p>}
+
+        <button className="gold-button w-full mt-10"
+          disabled={saving||uploading}
+          onClick={save}>
+          {saving?"PUBLISHING...":"SAVE CHANGES ✧"}
+        </button>
+
+      </div>
+
+      <!-- LIVE PREVIEW -->
+      <div className="glass p-6 mt-10 text-center">
+        <h2 className="script text-5xl gold-text">Live Preview</h2>
+        <Ornament/>
+        <p className="cinzel text-xs gold tracking-widest">TOGETHER FOREVER</p>
+        <h3 className="script text-6xl mt-5">
+          {data.bride_name} & {data.groom_name}
+        </h3>
+        <p className="text-2xl mt-4">{data.wedding_date}</p>
+        <p className="mt-3">{data.invitation_line}</p>
+        <p className="mt-5 gold">{data.card_venue}</p>
+        <Link to="/invitation" className="gold-button inline-block mt-7">
+          VIEW PAGE 2
+        </Link>
+      </div>
+
+    </div>
+  </main>;
+}
+
+/* ======================================
+   APPLICATION ENTRY
+====================================== */
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <HashRouter>
+    <App/>
+  </HashRouter>
+);
+</script>
+</body>
+</html>
