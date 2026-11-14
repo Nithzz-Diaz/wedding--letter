@@ -74,12 +74,13 @@ button,input,textarea,select {
   min-height:100vh;
   position:relative;
   isolation:isolate;
+  z-index:1;
 }
 
 .background {
   position: fixed;
   inset: 0;
-  z-index: -3;
+  z-index: 0;
   overflow: hidden;
 
   background:
@@ -108,7 +109,6 @@ button,input,textarea,select {
   pointer-events:none;
 }
   
-}
 
 #particles {
   position:fixed;
