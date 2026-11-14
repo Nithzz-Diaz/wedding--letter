@@ -550,11 +550,11 @@ function ChurchBackground(){
         <rect width="1200" height="850" fill="#111729"/>
         <path d="M0 0H1200V850H0Z" fill="url(#wall)" opacity=".45"/>
 
-        <!-- Architectural ceiling -->
+        {/* Architectural ceiling */}
         <path d="M0 0H1200L740 350H460Z" fill="#242536"/>
         <path d="M0 0L600 390L1200 0" fill="none" stroke="#d6b783" strokeWidth="9" opacity=".4"/>
 
-        <!-- Coloured light beams -->
+        {/* Coloured light beams */}
         <g opacity=".13" filter="url(#blur)">
           <path d="M520 150L250 750H500Z" fill="#4589df"/>
           <path d="M650 150L950 750H700Z" fill="#d34d68"/>
@@ -562,7 +562,7 @@ function ChurchBackground(){
           <path d="M620 150L800 750H610Z" fill="#4bba91"/>
         </g>
 
-        <!-- Side arches -->
+        {/* Side arches */}
         <g fill="none" stroke="#d9c9aa" strokeWidth="22" opacity=".78">
           <path d="M-100 760V250Q90 -20 280 250V760"/>
           <path d="M920 760V250Q1110 -20 1300 250V760"/>
@@ -573,7 +573,7 @@ function ChurchBackground(){
           <path d="M950 760V260Q1110 20 1270 260V760"/>
         </g>
 
-        <!-- Receding columns -->
+        {/* Receding columns */}
         <g fill="url(#marble)" stroke="#ad997a" strokeWidth="3">
           <rect x="65" y="260" width="68" height="450" rx="12"/>
           <rect x="190" y="320" width="45" height="390" rx="9"/>
@@ -588,7 +588,7 @@ function ChurchBackground(){
           <rect x="955" y="312" width="65" height="14" rx="5"/>
         </g>
 
-        <!-- Stained glass -->
+        {/* Stained glass */}
         <g transform="translate(510 45)">
           <path d="M0 150V55Q90 -50 180 55V150Z" fill="#17243d" stroke="#d5aa5d" strokeWidth="7"/>
           <path d="M12 145V60Q90 -28 168 60V145Z" fill="#264f86" stroke="#e5bd74" strokeWidth="3"/>
@@ -599,10 +599,10 @@ function ChurchBackground(){
           <circle cx="90" cy="75" r="22" fill="#f5d78a" opacity=".6"/>
         </g>
 
-        <!-- Altar glow -->
+        {/* Altar glow */}
         <ellipse cx="600" cy="340" rx="250" ry="210" fill="url(#altarGlow)"/>
 
-        <!-- Altar -->
+        {/* Altar */}
         <g>
           <path d="M465 420H735L755 475H445Z" fill="#d2b47e" stroke="#f7df9e" strokeWidth="3"/>
           <path d="M490 475H710V555H490Z" fill="#796048"/>
@@ -611,7 +611,7 @@ function ChurchBackground(){
           <path d="M600 260V415M570 300H630" stroke="#6d4828" strokeWidth="2" opacity=".7"/>
         </g>
 
-        <!-- Candelabras -->
+        {/* Candelabras */}
         <g stroke="#d9b56b" strokeWidth="5" fill="none">
           <path d="M420 450V365M390 365H450M400 390L420 365L440 390"/>
           <path d="M780 450V365M750 365H810M760 390L780 365L800 390"/>
@@ -623,7 +623,7 @@ function ChurchBackground(){
           <path d="M790 360Q780 340 800 328Q810 347 790 360Z"/>
         </g>
 
-        <!-- Hanging chandeliers -->
+        {/* Hanging chandeliers */}
         <g stroke="#d4a24c" fill="#f3d58a">
           <path d="M260 0V95M940 0V95" strokeWidth="3"/>
           <circle cx="260" cy="105" r="25" fill="none" strokeWidth="4"/>
@@ -633,18 +633,18 @@ function ChurchBackground(){
           <path d="M245 110L230 140M275 110L290 140M925 110L910 140M955 110L970 140" strokeWidth="3"/>
         </g>
 
-        <!-- Floor perspective -->
+        {/* Floor perspective */}
         <path d="M0 520L450 390H750L1200 520V850H0Z" fill="url(#floor)"/>
         <path d="M450 390L250 850M750 390L950 850" stroke="#f1d6a4" strokeWidth="3" opacity=".28"/>
         <path d="M0 650H1200M0 760H1200" stroke="#e4c89d" strokeWidth="2" opacity=".18"/>
 
-        <!-- Floor reflection -->
+        {/* Floor reflection */}
         <g opacity=".15" filter="url(#soft)">
           <path d="M455 570H745L790 850H410Z" fill="#f5d99a"/>
           <path d="M550 570H650L680 850H520Z" fill="#fff2d2"/>
         </g>
 
-        <!-- Pew silhouettes -->
+        {/* Pew silhouettes */}
         <g fill="#3d202a" stroke="#b78b4c" strokeWidth="3">
           <path d="M0 500L330 475V500L0 550Z"/>
           <path d="M1200 500L870 475V500L1200 550Z"/>
@@ -652,7 +652,7 @@ function ChurchBackground(){
           <path d="M1200 620L850 560V590L1200 680Z"/>
         </g>
 
-        <!-- Candle rows -->
+        {/* Candle rows */}
         <g fill="#e8d4aa">
           {Array.from({length:9},(_,i)=><rect key={i} x={35+i*30} y={470+i*3} width="4" height="24" rx="2"/>)}
           {Array.from({length:9},(_,i)=><rect key={i} x={900+i*30} y={470+i*3} width="4" height="24" rx="2"/>)}
@@ -662,7 +662,7 @@ function ChurchBackground(){
           {Array.from({length:18},(_,i)=><circle key={i} cx={37+i*30} cy={467+(i%9)*3} r="3"/>)}
         </g>
 
-        <!-- Rose arrangements -->
+        {/* Rose arrangements */}
         <g className="rose">
           {[45,130,1000,1090].map((x,i)=>
             <g key={i} transform={`translate(${x} ${i%2?620:565})`}>
@@ -736,51 +736,51 @@ function AltarCoupleScene(){
 
       <ellipse cx="450" cy="280" rx="270" ry="230" fill="url(#coupleGlow)"/>
 
-      <!-- Distant altar -->
+      {/* Distant altar */}
       <path d="M350 70H550V230H350Z" fill="#d4a24c" opacity=".15"/>
       <path d="M450 75V160M430 105H470" stroke="#f3d58a" strokeWidth="6"/>
       <path d="M300 250H600L580 280H320Z" fill="#d4a24c" opacity=".25"/>
 
-      <!-- Floor -->
+      {/* Floor */}
       <path d="M0 400L450 330L900 400V560H0Z" fill="#bda17c" opacity=".13"/>
       <path d="M450 330L300 560M450 330L600 560" stroke="#e8c990" opacity=".35"/>
 
-      <!-- Bride veil -->
+      {/* Bride veil */}
       <path d="M365 130Q310 210 340 360Q380 430 455 365Q490 220 430 130Z"
         fill="#f5efe6" opacity=".48" stroke="#fff3df" strokeWidth="2"/>
 
-      <!-- Bride hair -->
+      {/* Bride hair */}
       <ellipse cx="390" cy="150" rx="34" ry="43" fill="#38251f"/>
       <path d="M365 125Q390 90 420 130L430 175Q410 190 395 170Z" fill="#4b2d24"/>
 
-      <!-- Bride dress -->
+      {/* Bride dress */}
       <path d="M380 185Q350 205 340 275L275 475Q390 505 500 475L435 275Q425 205 400 185Z"
         fill="url(#gown)" stroke="#fff6e9" strokeWidth="3"/>
 
       <path d="M370 230Q395 280 430 420M410 225Q430 300 470 460M355 300Q375 390 340 465"
         fill="none" stroke="#d2c3ae" strokeWidth="3" opacity=".65"/>
 
-      <!-- Bride arm -->
+      {/* Bride arm */}
       <path d="M370 210Q330 250 365 300L430 320" fill="none" stroke="#e7c6a9" strokeWidth="17" strokeLinecap="round"/>
 
-      <!-- Groom body -->
+      {/* Groom body */}
       <path d="M475 190L520 190L550 445L445 445Z" fill="url(#suit)" stroke="#6c6370" strokeWidth="2"/>
       <path d="M480 190L500 255L520 190L505 310Z" fill="#e7e0d6"/>
       <path d="M475 190L495 250L500 190Z" fill="#b8a5a0"/>
       <path d="M520 190L510 250L505 190Z" fill="#292d3d"/>
 
-      <!-- Groom head -->
+      {/* Groom head */}
       <ellipse cx="500" cy="145" rx="32" ry="40" fill="#b98567"/>
       <path d="M469 140Q470 100 505 105Q535 110 532 140Q505 125 469 140Z" fill="#29211e"/>
 
-      <!-- Groom trousers -->
+      {/* Groom trousers */}
       <path d="M455 430L505 430L505 530H460Z" fill="#111827"/>
       <path d="M510 430L540 430L550 530H510Z" fill="#111827"/>
 
-      <!-- Hands -->
+      {/* Hands */}
       <path d="M430 310Q465 325 485 305" fill="none" stroke="#d8b394" strokeWidth="15" strokeLinecap="round"/>
 
-      <!-- Bouquet -->
+      {/* Bouquet */}
       <path d="M350 310L370 355" stroke="#58724c" strokeWidth="5"/>
       <g fill="#fff0e5">
         <circle cx="340" cy="300" r="13"/>
@@ -793,7 +793,7 @@ function AltarCoupleScene(){
         <circle cx="350" cy="304" r="4"/>
       </g>
 
-      <!-- Reflections -->
+      {/* Reflections */}
       <g opacity=".15" filter="blur(5px)">
         <path d="M275 475Q390 505 500 475L480 555H300Z" fill="#fff3dc"/>
       </g>
