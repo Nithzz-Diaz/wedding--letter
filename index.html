@@ -81,7 +81,8 @@ button,input,textarea,select {
   inset:0;
   z-index:-3;
   overflow:hidden;
-  background:#0d1224;
+  background:
+    radial-gradient(ellipse at 50% 35%,#f4dfb5 0%,#bca17c 42%,#514238 100%);
 }
 
 .background svg {
@@ -95,9 +96,11 @@ button,input,textarea,select {
   position:absolute;
   inset:0;
   background:
-    linear-gradient(90deg,rgba(5,8,19,.48),transparent 45%,rgba(5,8,19,.48)),
-    linear-gradient(0deg,rgba(5,8,19,.85),rgba(5,8,19,.12) 60%,rgba(5,8,19,.45));
+    linear-gradient(90deg,rgba(35,24,18,.25),transparent 35%,transparent 65%,rgba(35,24,18,.25)),
+    linear-gradient(0deg,rgba(35,24,18,.58),transparent 55%,rgba(35,24,18,.12));
   pointer-events:none;
+}
+  
 }
 
 #particles {
@@ -436,12 +439,18 @@ function ChurchBackground(){
     if(!canvas)return;
 
     const ctx=canvas.getContext("2d");
-    let width,height,particles=[],raf;
-    const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let particles=[];
+    let raf;
+    let width,height;
+
+    const reduced=window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
     function resize(){
       width=canvas.width=window.innerWidth*devicePixelRatio;
       height=canvas.height=window.innerHeight*devicePixelRatio;
+
       canvas.style.width=window.innerWidth+"px";
       canvas.style.height=window.innerHeight+"px";
     }
@@ -449,237 +458,456 @@ function ChurchBackground(){
     resize();
     window.addEventListener("resize",resize);
 
-    for(let i=0;i<55;i++){
+    for(let i=0;i<65;i++){
       particles.push({
-        x:Math.random()*2-1,
-        y:Math.random()*2-1,
-        r:Math.random()*2.1+.4,
-        speed:Math.random()*.00035+.00012,
-        alpha:Math.random()*.65+.15,
-        phase:Math.random()*6
+        x:Math.random(),
+        y:Math.random(),
+        size:Math.random()*2+0.5,
+        speed:Math.random()*0.00035+0.0001,
+        alpha:Math.random()*0.5+0.2
       });
     }
 
-    let tick=0;
-
     function draw(){
-      if(document.hidden){raf=requestAnimationFrame(draw);return;}
-
       ctx.clearRect(0,0,width,height);
-      tick++;
 
       particles.forEach(p=>{
-        if(!reduced)p.y-=p.speed;
-        if(p.y<-.1)p.y=1.1;
-
-        const x=(p.x+1)*width/2;
-        const y=(p.y+1)*height/2;
-        const a=p.alpha*(.6+.4*Math.sin(tick*.018+p.phase));
+        if(!reduced){
+          p.y-=p.speed;
+          if(p.y<0)p.y=1;
+        }
 
         ctx.beginPath();
-        ctx.arc(x,y,p.r*devicePixelRatio,0,Math.PI*2);
-        ctx.fillStyle=`rgba(243,213,138,${a})`;
-        ctx.shadowColor="#f3d58a";
-        ctx.shadowBlur=9*devicePixelRatio;
+        ctx.arc(
+          p.x*width,
+          p.y*height,
+          p.size*devicePixelRatio,
+          0,
+          Math.PI*2
+        );
+
+        ctx.fillStyle=`rgba(255,224,157,${p.alpha})`;
+        ctx.shadowColor="#ffe0a0";
+        ctx.shadowBlur=12*devicePixelRatio;
         ctx.fill();
       });
 
       ctx.shadowBlur=0;
-      if(!reduced)raf=requestAnimationFrame(draw);
+
+      if(!reduced){
+        raf=requestAnimationFrame(draw);
+      }
     }
 
     draw();
 
-    const visibility=()=>{if(!document.hidden&&!reduced)draw();};
-    document.addEventListener("visibilitychange",visibility);
-
     return ()=>{
       cancelAnimationFrame(raf);
       window.removeEventListener("resize",resize);
-      document.removeEventListener("visibilitychange",visibility);
     };
   },[]);
 
   return <>
     <div className="background">
-      <svg viewBox="0 0 1200 850" preserveAspectRatio="xMidYMid slice">
+
+      <svg
+        viewBox="0 0 1440 1000"
+        preserveAspectRatio="xMidYMid slice"
+      >
+
         <defs>
-          <linearGradient id="wall" x2="1">
-            <stop stopColor="#332b30"/>
-            <stop offset=".5" stopColor="#d4c1a0"/>
-            <stop offset="1" stopColor="#302731"/>
+
+          <linearGradient id="chapelWall" x2="0" y2="1">
+            <stop stopColor="#f9f0df"/>
+            <stop offset=".55" stopColor="#d7c5a8"/>
+            <stop offset="1" stopColor="#89735d"/>
           </linearGradient>
 
-          <linearGradient id="marble" x2="0" y2="1">
-            <stop stopColor="#f6e8ce"/>
-            <stop offset=".5" stopColor="#b4a38f"/>
-            <stop offset="1" stopColor="#292a38"/>
+          <linearGradient id="ivoryMarble" x2="1">
+            <stop stopColor="#fff9ed"/>
+            <stop offset=".3" stopColor="#d9cbb6"/>
+            <stop offset=".55" stopColor="#fffaf0"/>
+            <stop offset="1" stopColor="#b8a58c"/>
           </linearGradient>
 
-          <linearGradient id="floor" x2="0" y2="1">
-            <stop stopColor="#d3b88c"/>
-            <stop offset=".25" stopColor="#8d796d"/>
-            <stop offset="1" stopColor="#171a2a"/>
+          <linearGradient id="chapelFloor" x2="0" y2="1">
+            <stop stopColor="#e9d9bd"/>
+            <stop offset=".5" stopColor="#b9a184"/>
+            <stop offset="1" stopColor="#584536"/>
           </linearGradient>
 
-          <linearGradient id="goldlight" x2="0" y2="1">
-            <stop stopColor="#fff6c8"/>
-            <stop offset="1" stopColor="#a96d27"/>
+          <linearGradient id="goldTrim" x2="1">
+            <stop stopColor="#9e7134"/>
+            <stop offset=".5" stopColor="#ffe2a0"/>
+            <stop offset="1" stopColor="#a47737"/>
           </linearGradient>
 
-          <radialGradient id="altarGlow">
-            <stop stopColor="#fff4c1" stopOpacity=".95"/>
-            <stop offset=".4" stopColor="#d4a24c" stopOpacity=".35"/>
-            <stop offset="1" stopColor="#d4a24c" stopOpacity="0"/>
+          <radialGradient id="sunGlow">
+            <stop stopColor="#fff7d8" stopOpacity=".95"/>
+            <stop offset=".4" stopColor="#ffe4a6" stopOpacity=".35"/>
+            <stop offset="1" stopColor="#ffe4a6" stopOpacity="0"/>
           </radialGradient>
 
-          <linearGradient id="glassLight" x2="0" y2="1">
-            <stop stopColor="#f4d58b"/>
-            <stop offset="1" stopColor="#5b173e"/>
-          </linearGradient>
+          <radialGradient id="stainedGlass">
+            <stop stopColor="#e6b66c"/>
+            <stop offset=".45" stopColor="#9c5261"/>
+            <stop offset="1" stopColor="#34536b"/>
+          </radialGradient>
 
-          <filter id="blur">
-            <feGaussianBlur stdDeviation="13"/>
+          <filter id="chapelBlur">
+            <feGaussianBlur stdDeviation="22"/>
           </filter>
 
-          <filter id="soft">
-            <feGaussianBlur stdDeviation="3"/>
+          <filter id="roseShadow">
+            <feGaussianBlur stdDeviation="5"/>
           </filter>
+
         </defs>
 
-        <rect width="1200" height="850" fill="#111729"/>
-        <path d="M0 0H1200V850H0Z" fill="url(#wall)" opacity=".45"/>
+        {/* Chapel interior */}
+        <rect width="1440" height="1000" fill="#786550"/>
 
-        {/* Architectural ceiling */}
-        <path d="M0 0H1200L740 350H460Z" fill="#242536"/>
-        <path d="M0 0L600 390L1200 0" fill="none" stroke="#d6b783" strokeWidth="9" opacity=".4"/>
+        <rect
+          width="1440"
+          height="720"
+          fill="url(#chapelWall)"
+        />
 
-        {/* Coloured light beams */}
-        <g opacity=".13" filter="url(#blur)">
-          <path d="M520 150L250 750H500Z" fill="#4589df"/>
-          <path d="M650 150L950 750H700Z" fill="#d34d68"/>
-          <path d="M570 150L400 750H610Z" fill="#e6b34f"/>
-          <path d="M620 150L800 750H610Z" fill="#4bba91"/>
+        {/* Golden sunlight */}
+        <ellipse
+          cx="720"
+          cy="340"
+          rx="520"
+          ry="400"
+          fill="url(#sunGlow)"
+        />
+
+        <g opacity=".16" filter="url(#chapelBlur)">
+          <path d="M540 100L230 900H510Z" fill="#fff1c4"/>
+          <path d="M900 100L1220 900H930Z" fill="#fff1c4"/>
+          <path d="M650 100L500 900H700Z" fill="#ffe8b3"/>
+        </g>
+
+        {/* Cathedral ceiling */}
+        <path
+          d="M0 0H1440L920 360H520Z"
+          fill="#eee0c9"
+        />
+
+        <path
+          d="M0 0L720 390L1440 0"
+          fill="none"
+          stroke="#b79b70"
+          strokeWidth="12"
+        />
+
+        <path
+          d="M0 0L720 390L1440 0"
+          fill="none"
+          stroke="#fff4dd"
+          strokeWidth="3"
+        />
+
+        {/* Central stained glass window */}
+        <g transform="translate(620 45)">
+
+          <path
+            d="M0 180V80Q100 -45 200 80V180Z"
+            fill="#493b35"
+            stroke="url(#goldTrim)"
+            strokeWidth="12"
+          />
+
+          <path
+            d="M14 175V85Q100 -20 186 85V175Z"
+            fill="url(#stainedGlass)"
+            stroke="#f4dba9"
+            strokeWidth="4"
+          />
+
+          <path
+            d="M100 30V175M18 125H182"
+            stroke="#f7d99b"
+            strokeWidth="6"
+          />
+
+          <circle
+            cx="100"
+            cy="105"
+            r="28"
+            fill="#f7df9f"
+            opacity=".75"
+          />
+
+          <path
+            d="M20 80L100 125L180 80"
+            fill="none"
+            stroke="#f6d18b"
+            strokeWidth="5"
+          />
+
         </g>
 
         {/* Side arches */}
-        <g fill="none" stroke="#d9c9aa" strokeWidth="22" opacity=".78">
-          <path d="M-100 760V250Q90 -20 280 250V760"/>
-          <path d="M920 760V250Q1110 -20 1300 250V760"/>
+        <g fill="none" stroke="#f4e8d5">
+
+          <path
+            d="M-160 820V260Q80 -110 320 260V820"
+            strokeWidth="42"
+          />
+
+          <path
+            d="M1120 820V260Q1360 -110 1600 260V820"
+            strokeWidth="42"
+          />
+
+          <path
+            d="M-120 820V280Q80 -45 280 280V820"
+            stroke="#b79c76"
+            strokeWidth="5"
+          />
+
+          <path
+            d="M1160 820V280Q1360 -45 1560 280V820"
+            stroke="#b79c76"
+            strokeWidth="5"
+          />
+
         </g>
 
-        <g fill="none" stroke="#6f5d53" strokeWidth="7" opacity=".5">
-          <path d="M-70 760V260Q90 20 250 260V760"/>
-          <path d="M950 760V260Q1110 20 1270 260V760"/>
+        {/* Marble columns */}
+        <g fill="url(#ivoryMarble)" stroke="#a88e6c" strokeWidth="3">
+
+          <rect x="65" y="260" width="105" height="570" rx="9"/>
+          <rect x="250" y="330" width="75" height="470" rx="8"/>
+
+          <rect x="1270" y="260" width="105" height="570" rx="9"/>
+          <rect x="1115" y="330" width="75" height="470" rx="8"/>
+
         </g>
 
-        {/* Receding columns */}
-        <g fill="url(#marble)" stroke="#ad997a" strokeWidth="3">
-          <rect x="65" y="260" width="68" height="450" rx="12"/>
-          <rect x="190" y="320" width="45" height="390" rx="9"/>
-          <rect x="1045" y="260" width="68" height="450" rx="12"/>
-          <rect x="965" y="320" width="45" height="390" rx="9"/>
+        {/* Column capitals */}
+        <g fill="url(#goldTrim)">
+
+          <rect x="48" y="245" width="140" height="28" rx="5"/>
+          <rect x="238" y="318" width="100" height="22" rx="5"/>
+
+          <rect x="1253" y="245" width="140" height="28" rx="5"/>
+          <rect x="1102" y="318" width="100" height="22" rx="5"/>
+
         </g>
 
-        <g fill="#e9d5b1">
-          <rect x="52" y="250" width="94" height="20" rx="5"/>
-          <rect x="180" y="312" width="65" height="14" rx="5"/>
-          <rect x="1034" y="250" width="94" height="20" rx="5"/>
-          <rect x="955" y="312" width="65" height="14" rx="5"/>
+        {/* Distant altar */}
+        <ellipse
+          cx="720"
+          cy="430"
+          rx="290"
+          ry="220"
+          fill="url(#sunGlow)"
+        />
+
+        <path
+          d="M570 420H870V520H570Z"
+          fill="#d6c2a2"
+          stroke="#f9e7c3"
+          strokeWidth="5"
+        />
+
+        <path
+          d="M545 520H895L925 555H515Z"
+          fill="url(#goldTrim)"
+        />
+
+        <path
+          d="M600 555H840V650H600Z"
+          fill="#a68a67"
+        />
+
+        <path
+          d="M720 265V420M690 305H750"
+          stroke="#f6e6c5"
+          strokeWidth="11"
+          strokeLinecap="round"
+        />
+
+        <path
+          d="M720 265V420M690 305H750"
+          stroke="#98764a"
+          strokeWidth="2"
+        />
+
+        {/* Golden chandeliers */}
+        <g
+          stroke="url(#goldTrim)"
+          fill="none"
+          strokeWidth="6"
+        >
+
+          <path d="M300 0V110M1140 0V110"/>
+
+          <circle cx="300" cy="145" r="48"/>
+          <circle cx="1140" cy="145" r="48"/>
+
+          <path d="M270 145L235 200M330 145L365 200"/>
+          <path d="M1110 145L1075 200M1170 145L1205 200"/>
+
         </g>
 
-        {/* Stained glass */}
-        <g transform="translate(510 45)">
-          <path d="M0 150V55Q90 -50 180 55V150Z" fill="#17243d" stroke="#d5aa5d" strokeWidth="7"/>
-          <path d="M12 145V60Q90 -28 168 60V145Z" fill="#264f86" stroke="#e5bd74" strokeWidth="3"/>
-          <path d="M90 30V145M15 95H165" stroke="#e7c37c" strokeWidth="5"/>
-          <path d="M15 65L90 95L165 65L90 35Z" fill="#8e2843" opacity=".85"/>
-          <path d="M15 100L90 95L90 145H15Z" fill="#1c765e" opacity=".9"/>
-          <path d="M90 95H165V145H90Z" fill="#b36d22" opacity=".9"/>
-          <circle cx="90" cy="75" r="22" fill="#f5d78a" opacity=".6"/>
+        <g fill="#fff0bf">
+          <circle cx="300" cy="145" r="12"/>
+          <circle cx="1140" cy="145" r="12"/>
+          <circle cx="235" cy="200" r="8"/>
+          <circle cx="365" cy="200" r="8"/>
+          <circle cx="1075" cy="200" r="8"/>
+          <circle cx="1205" cy="200" r="8"/>
         </g>
 
-        {/* Altar glow */}
-        <ellipse cx="600" cy="340" rx="250" ry="210" fill="url(#altarGlow)"/>
+        {/* Floor and central aisle */}
+        <path
+          d="M0 610L510 480H930L1440 610V1000H0Z"
+          fill="url(#chapelFloor)"
+        />
 
-        {/* Altar */}
-        <g>
-          <path d="M465 420H735L755 475H445Z" fill="#d2b47e" stroke="#f7df9e" strokeWidth="3"/>
-          <path d="M490 475H710V555H490Z" fill="#796048"/>
-          <path d="M455 555H745V575H455Z" fill="#c69a50"/>
-          <path d="M600 260V415M570 300H630" stroke="#e8cf91" strokeWidth="9" strokeLinecap="round"/>
-          <path d="M600 260V415M570 300H630" stroke="#6d4828" strokeWidth="2" opacity=".7"/>
-        </g>
+        <path
+          d="M510 480L330 1000M930 480L1110 1000"
+          stroke="#f8e7c8"
+          strokeWidth="6"
+          opacity=".6"
+        />
 
-        {/* Candelabras */}
-        <g stroke="#d9b56b" strokeWidth="5" fill="none">
-          <path d="M420 450V365M390 365H450M400 390L420 365L440 390"/>
-          <path d="M780 450V365M750 365H810M760 390L780 365L800 390"/>
-        </g>
+        <path
+          d="M0 760H1440M0 890H1440"
+          stroke="#f7e4c1"
+          strokeWidth="3"
+          opacity=".35"
+        />
 
-        <g className="candle-flame" fill="#ffe8a2">
-          <path d="M410 360Q400 340 420 328Q430 347 410 360Z"/>
-          <path d="M590 240Q580 220 600 208Q610 230 590 240Z"/>
-          <path d="M790 360Q780 340 800 328Q810 347 790 360Z"/>
-        </g>
+        {/* Aisle reflections */}
+        <path
+          d="M520 570H920L1040 1000H400Z"
+          fill="#fff1d2"
+          opacity=".13"
+        />
 
-        {/* Hanging chandeliers */}
-        <g stroke="#d4a24c" fill="#f3d58a">
-          <path d="M260 0V95M940 0V95" strokeWidth="3"/>
-          <circle cx="260" cy="105" r="25" fill="none" strokeWidth="4"/>
-          <circle cx="940" cy="105" r="25" fill="none" strokeWidth="4"/>
-          <circle cx="260" cy="105" r="7"/>
-          <circle cx="940" cy="105" r="7"/>
-          <path d="M245 110L230 140M275 110L290 140M925 110L910 140M955 110L970 140" strokeWidth="3"/>
-        </g>
+        <path
+          d="M650 570H790L840 1000H600Z"
+          fill="#fff8e8"
+          opacity=".17"
+        />
 
-        {/* Floor perspective */}
-        <path d="M0 520L450 390H750L1200 520V850H0Z" fill="url(#floor)"/>
-        <path d="M450 390L250 850M750 390L950 850" stroke="#f1d6a4" strokeWidth="3" opacity=".28"/>
-        <path d="M0 650H1200M0 760H1200" stroke="#e4c89d" strokeWidth="2" opacity=".18"/>
+        {/* Church pews */}
+        <g fill="#634333" stroke="#d0a56b" strokeWidth="5">
 
-        {/* Floor reflection */}
-        <g opacity=".15" filter="url(#soft)">
-          <path d="M455 570H745L790 850H410Z" fill="#f5d99a"/>
-          <path d="M550 570H650L680 850H520Z" fill="#fff2d2"/>
-        </g>
+          <path d="M0 570L450 525V565L0 650Z"/>
+          <path d="M1440 570L990 525V565L1440 650Z"/>
 
-        {/* Pew silhouettes */}
-        <g fill="#3d202a" stroke="#b78b4c" strokeWidth="3">
-          <path d="M0 500L330 475V500L0 550Z"/>
-          <path d="M1200 500L870 475V500L1200 550Z"/>
-          <path d="M0 620L350 560V590L0 680Z"/>
-          <path d="M1200 620L850 560V590L1200 680Z"/>
-        </g>
+          <path d="M0 730L430 640V690L0 820Z"/>
+          <path d="M1440 730L1010 640V690L1440 820Z"/>
 
-        {/* Candle rows */}
-        <g fill="#e8d4aa">
-          {Array.from({length:9},(_,i)=><rect key={i} x={35+i*30} y={470+i*3} width="4" height="24" rx="2"/>)}
-          {Array.from({length:9},(_,i)=><rect key={i} x={900+i*30} y={470+i*3} width="4" height="24" rx="2"/>)}
-        </g>
-
-        <g fill="#ffe7a0" className="candle-flame">
-          {Array.from({length:18},(_,i)=><circle key={i} cx={37+i*30} cy={467+(i%9)*3} r="3"/>)}
         </g>
 
         {/* Rose arrangements */}
-        <g className="rose">
-          {[45,130,1000,1090].map((x,i)=>
-            <g key={i} transform={`translate(${x} ${i%2?620:565})`}>
-              <path d="M0 0Q-15 -60 0 -85Q15 -60 0 0" fill="#425b42"/>
-              <circle cx="0" cy="-25" r="17" fill="#eee1d0"/>
-              <circle cx="-10" cy="-35" r="11" fill="#fff8eb"/>
-              <circle cx="10" cy="-35" r="11" fill="#e9d5c6"/>
-              <circle cx="0" cy="-44" r="9" fill="#fff"/>
-              <circle cx="0" cy="-34" r="5" fill="#d8a5a0"/>
+        {[
+          [45,670,1.15],
+          [170,760,.85],
+          [1260,760,.85],
+          [1380,670,1.15],
+          [310,850,.75],
+          [1130,850,.75]
+        ].map(([x,y,s],i)=>
+          <g key={i} transform={`translate(${x} ${y}) scale(${s})`}>
+
+            {/* Greenery */}
+            <path
+              d="M0 60Q-65 0 -45 -55Q10 -20 0 60"
+              fill="#496b48"
+            />
+
+            <path
+              d="M0 60Q55 -10 65 -60Q-5 -25 0 60"
+              fill="#607e51"
+            />
+
+            <path
+              d="M0 50Q-15 -55 10 -90Q30 -25 0 50"
+              fill="#3d603e"
+            />
+
+            {/* Rose petals */}
+            <g fill="#fffaf0" stroke="#e8d9c7" strokeWidth="1.5">
+
+              <ellipse cx="-18" cy="-28" rx="20" ry="15"/>
+              <ellipse cx="18" cy="-28" rx="20" ry="15"/>
+              <ellipse cx="0" cy="-43" rx="20" ry="15"/>
+              <ellipse cx="-12" cy="-50" rx="14" ry="14"/>
+              <ellipse cx="12" cy="-50" rx="14" ry="14"/>
+              <ellipse cx="0" cy="-33" rx="12" ry="12"/>
+
+            </g>
+
+            <circle cx="0" cy="-40" r="7" fill="#d6a9a0"/>
+
+            <g fill="#f5e9d7">
+              <circle cx="-43" cy="-18" r="11"/>
+              <circle cx="43" cy="-12" r="12"/>
+              <circle cx="0" cy="-78" r="12"/>
+            </g>
+
+          </g>
+        )}
+
+        {/* Candlelight */}
+        <g fill="#fff0bc">
+          {Array.from({length:12},(_,i)=>
+            <g key={i}>
+              <rect
+                x={30+i*27}
+                y={590+i*2}
+                width="5"
+                height="27"
+                rx="2"
+              />
+              <circle
+                cx={32+i*27}
+                cy={585+i*2}
+                r="5"
+              />
+            </g>
+          )}
+
+          {Array.from({length:12},(_,i)=>
+            <g key={i}>
+              <rect
+                x={1090+i*27}
+                y={590+i*2}
+                width="5"
+                height="27"
+                rx="2"
+              />
+              <circle
+                cx={1092+i*27}
+                cy={585+i*2}
+                r="5"
+              />
             </g>
           )}
         </g>
 
-        <rect width="1200" height="850" fill="none" stroke="#080b15" strokeWidth="55" opacity=".4"/>
+        {/* Warm cinematic vignette */}
+        <rect
+          width="1440"
+          height="1000"
+          fill="none"
+          stroke="#493528"
+          strokeWidth="90"
+          opacity=".22"
+        />
+
       </svg>
     </div>
+
     <canvas id="particles" ref={canvasRef}/>
+
   </>;
 }
 
