@@ -411,22 +411,21 @@ const DEFAULT_DATA = {
   photo_url:"",
   wedding_event_date:"December 20, 2026",
   wedding_time:"6:00 PM",
-  wedding_venue:"Grand Palace",
-  wedding_address:"Bangalore, Karnataka, India",
+  wedding_venue:"Sabha Bhavan",
+  wedding_address:"Surathkal, Karnataka, India",
   wedding_map:"",
   wedding_schedule:[
-    {time:"5:30 PM",activity:"Guest Arrival"},
-    {time:"6:00 PM",activity:"Wedding Ceremony"},
+    {time:"5:30 PM",activity:"Nuptial Mass"},
+    {time:"7:00 PM",activity:"Wedding Ceremony"},
     {time:"7:30 PM",activity:"Celebration & Dinner"}
   ],
   roce_date:"December 19, 2026",
   roce_time:"6:00 PM",
-  roce_venue:"Grand Palace",
-  roce_address:"Bangalore, Karnataka, India",
+  roce_venue:"At home",
+  roce_address:"Dias compound,kana,surathkal",
   roce_schedule:[
-    {time:"5:30 PM",activity:"Guest Arrival"},
-    {time:"6:00 PM",activity:"Roce Ceremony"},
-    {time:"7:30 PM",activity:"Dinner & Celebration"}
+    {time:"7:00 PM",activity:"Roce Ceremony"},
+    {time:"8:30 PM",activity:"Dinner & Celebration"}
   ],
   card_date:"December 20, 2026",
   card_time:"6:00 PM",
@@ -1415,26 +1414,6 @@ function InvitationPage({data,onBack,onDetails}){
         </button>
       </div>
 
-      {/* Information cards */}
-      <div className="grid grid-cols-3 gap-3 md:gap-6 mt-14">
-        <div className="info-card">
-          <div className="text-3xl gold">♧</div>
-          <h3 className="mt-3">DATE</h3>
-          <p>{data.card_date}</p>
-        </div>
-
-        <div className="info-card">
-          <div className="text-3xl gold">◷</div>
-          <h3 className="mt-3">TIME</h3>
-          <p>{data.card_time}</p>
-        </div>
-
-        <div className="info-card">
-          <div className="text-3xl gold">⌖</div>
-          <h3 className="mt-3">VENUE</h3>
-          <p>{data.card_venue}</p>
-        </div>
-      </div>
 
       {/* Altar scene at the bottom */}
       <AltarCoupleScene/>
