@@ -1170,7 +1170,7 @@ function App(){
                 const {data:allowed,error:allowError}=await supabase
                   .from("admins")
                   .select("email")
-                  .eq("email",result.user.email)
+                  .ilike("email",result.user.email)
                   .maybeSingle();
 
                 if(allowError||!allowed){
@@ -1204,7 +1204,7 @@ function App(){
                 const {data:allowed,error:allowError}=await supabase
                   .from("admins")
                   .select("email")
-                  .eq("email",user.email)
+                  .ilike("email",user.email)
                   .maybeSingle();
 
                 if(allowError||!allowed)throw new Error("Not authorised.");
