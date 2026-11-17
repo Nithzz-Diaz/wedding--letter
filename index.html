@@ -1265,13 +1265,13 @@ function App(){
               const path="couple-"+Date.now()+"."+ext;
 
               const {error}=await supabase.storage
-                .from("couple-photos")
+                ..from("wedding-photos")
                 .upload(path,file,{upsert:true,contentType:file.type});
 
               if(error)throw error;
 
               const {data:publicData}=supabase.storage
-                .from("couple-photos")
+                ..from("wedding-photos")
                 .getPublicUrl(path);
 
               setData(d=>({...d,photo_url:publicData.publicUrl}));
