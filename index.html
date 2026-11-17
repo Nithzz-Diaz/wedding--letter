@@ -1173,9 +1173,24 @@ function App(){
                   .ilike("email",result.user.email)
                   .maybeSingle();
 
-                if(allowError||!allowed){
-                  await supabase.auth.signOut();
-                  throw new Error("This email is not authorised to access the dashboard.");
+               if(allowError){
+  console.error("Admin verification error:",allowError);
+
+  await supabase.auth.signOut();
+
+  throw new Error(
+    "Admin database error: "+allowError.message+
+    " (Code: "+allowError.code+")"
+  );
+}
+
+if(!allowed){
+  await supabase.auth.signOut();
+
+  throw new Error(
+    "Login successful, but this email was not found in the admins table."
+  );
+}
                 }
 
                 setUser(result.user);
